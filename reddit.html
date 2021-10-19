@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reddit</title>
+    <style>
+        .btnDiv{
+            display: flex;
+            flex-direction: row;
+            gap: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <script type="text/javascript">
+        const htmlBody= {
+                id: "001",
+                author: "albert",
+                body: "Whats the status?",
+                timestamp: "Sun Aug 02 2020 18:08:45 GMT+0530",
+                points: "2",
+                replies: [
+                {
+                    id: "003",
+                    author: "haren",
+                    body: "Wrote the test suites, waiting for approval?",
+                    timestamp: "Sun Aug 02 2020 18:12:45 GMT+0530",
+                    points: "3",
+                    replies: [
+                    {
+                        id: "004",
+                        author: "albert",
+                        body: "Thanks for the update!",
+                        timestamp: "Sun Aug 02 2020 18:15:45 GMT+0530",
+                        points: "8",
+                        replies:[]
+                    }
+                    ]
+                },
+                {
+                    id: "002",
+                    author: "Nrupul",
+                    body: "looking forward for the demo!",
+                    timestamp: "Sun Aug 02 2020 18:10:45 GMT+0530",
+                    points: "2",
+                    replies:[]
+                }
+                ]
+        }
+        function createReplies(replies,target){
+            for(const r of replies){
+                console.log(r)
+                const detail= document.createElement('p')
+                detail.textContent=`${r.author} ${r.points} points ${String(r.timestamp).substring(0,24)}`
+                const body= document.createElement('h2')
+                body.textContent= r.body
+                const div= document.createElement('div')
+                div.style.paddingLeft='5rem'
+                div.style.margin='10px'
+                createReplies(r.replies,div)
+                target.append(detail,body,addButton(),div)
+            }
+        }
+        function createMessage(message){
+            const cont= document.createElement('div')
+            const detail= document.createElement('p')
+            detail.textContent=`${message.author} ${message.points} points ${String(message.timestamp).substring(0,24)}`
+            const body= document.createElement('h2')
+            body.textContent= message.body
+            const repliesCont= document.createElement('div')
+            createReplies(message.replies,repliesCont)
+            repliesCont.style.paddingLeft='4rem'
+            repliesCont.style.margin='10px'
+            cont.append(detail,body,addButton(),repliesCont)
+            cont.style.marginLeft='20px'
+            return cont
+        }
+        function addButton(){
+            const btnDiv= document.createElement('div')
+            const reply = document.createElement('button')
+            reply.textContent='Reply'
+            const give = document.createElement('button')
+            give.textContent='Give'
+            const award = document.createElement('button')
+            award.textContent='Award'
+            const share = document.createElement('button')
+            share.textContent='Share'
+            const report= document.createElement('button')
+            report.textContent='Report'
+            const save = document.createElement('button')
+            save.textContent='Save'
+            btnDiv.append(reply,give,award,share,report,save)
+            btnDiv.setAttribute('class',btnDiv)
+            return btnDiv
+        }
+        document.body.append(createMessage(htmlBody))
+    </script>
+</body>
+</html>
